@@ -1,0 +1,41 @@
+﻿@model MVC.Models.ViewModels.EmployeeViewModel
+@{
+    ViewBag.Title = "Nuevo";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("Nuevo", "Employees",FormMethod.Post)) { 
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            @Html.LabelFor(d => d.FirstName)
+            @Html.TextBoxFor(d => d.FirstName, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.FirstName, null, new { @class = "text-danger" })
+        </div>
+
+        <div>
+            @Html.LabelFor(d => d.LastName)
+            @Html.TextBoxFor(d => d.LastName, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.LastName, null, new { @class = "text-danger" })
+        </div>
+
+        <div>
+            @Html.LabelFor(d => d.Title)
+            @Html.TextBoxFor(d => d.Title, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.Title, null, new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(d => d.Address)
+            @Html.TextBoxFor(d => d.Address, "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.Address, null, new { @class = "text-danger" })
+        </div>
+            <br />
+
+            <div style="text-align:right;padding:5px;">
+                <input type="submit" value="Guardar" class="btn btn-dark" />
+            </div>
+        </div>
+    </div>
+            }

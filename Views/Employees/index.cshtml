@@ -1,7 +1,38 @@
-﻿
+﻿@model List<MVC.Models.ViewModels.ListEmployeeViewModel>
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Empleados";
 }
 
-<h2>index</h2>
+<h2>@ViewBag.Title</h2>
 
+<div class="row" style="text-align:right;padding:5px;">
+    <a href="~/Employees/Nuevo" class="btn btn-primary">Nuevo</a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>                
+                <th>Nombre Emp.</th>
+                <th>Apellido Emp.</th>
+                <th>Dirección</th>
+                <th>Titulo</th> 
+                <th></th>
+            </tr>
+            @foreach (var empleado in Model)
+            {
+        <tr>            
+            <td>@empleado.FirstName</td>
+            <td>@empleado.LastName</td>
+            <td>@empleado.Address</td>
+            <td>@empleado.Title</td> 
+            <td>
+                <a href="~/Employees/Editar/@empleado.EmployeeID" class="btn btn-dark">Editar</a>
+                <a href="~/Employees/Eliminar/@empleado.EmployeeID" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+            }
+
+        </table>
+    </div>
+</div>

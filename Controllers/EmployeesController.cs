@@ -19,27 +19,52 @@ namespace MVC.Controllers
             {
                 lst = (from d in db.Employees
                           select new ListEmployeeViewModel
-                          {
-                              EmployeeID = d.EmployeeID,
+                          {             
                               LastName = d.LastName,
-                              FristName = d.FirstName,
-                              Title = d.Title,
-                              TitleOfCourtesy = d.TitleOfCourtesy,
-                              Address = d.Address,
-                              City = d.City,
-                              Region = d.Region,
-                              PostalCode = d.PostalCode,
-                              Country = d.Country,
-                              HomePhone = d.HomePhone,
-                              Extension = d.Extension,
-                              Notes = d.Notes,
-                              PhotoPath = d.PhotoPath
-
+                              FirstName = d.FirstName,
+                              Title = d.Title,                             
+                              Address = d.Address,                             
+                             
                           }).ToList();
             }
-
-
             return View(lst);
+        }
+        public ActionResult Nuevo()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Nuevo(EmployeeViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (NorthwindEntities db = new NorthwindEntities())
+                    {
+                        var oEmployee = new Employees();
+                        
+                        oEmployee.FirstName = model.FirstName;
+                        oEmployee.LastName = model.LastName;
+                        oEmployee.Title = model.Title;                        
+                        oEmployee.Address = model.Address;                        
+
+                        db.Employees.Add(oEmployee);
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Employees/");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
