@@ -1,7 +1,35 @@
-﻿
+﻿@model List<MVC.Models.ViewModels.ListEmployeeViewModel>
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Empleados";
 }
 
-<h2>index</h2>
+<h2>@ViewBag.Title</h2>
 
+<div class="row">
+    <div class="col-md-12">
+        <table>
+            <tr>
+                <th>Id Emp.</th>
+                <th>Nombre Emp.</th>
+                <th>Apellido Emp.</th>
+                <th>Dirección</th>
+                <th>Titulo</th>
+                <th>Region</th>
+                <th>Codigo Postal</th>
+            </tr>
+            @foreach (var empleado in Model)
+            {
+        <tr>
+            <td>@empleado.EmployeeID</td>
+            <td>@empleado.FristName</td>
+            <td>@empleado.LastName</td>
+            <td>@empleado.Address</td>
+            <td>@empleado.Title</td>
+            <td>@empleado.Region</td>
+            <td>@empleado.PostalCode</td>
+        </tr>
+            }
+
+        </table>
+    </div>
+</div>
