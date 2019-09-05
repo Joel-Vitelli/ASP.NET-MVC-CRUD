@@ -8,7 +8,7 @@ namespace MVC.Models.ViewModels
 {
     public class EmployeeViewModel
     {        
-        
+        public int EmployeeID { get; set; }
         [Required]
         [StringLength(10)]
         [Display(Name = "Nombre")]

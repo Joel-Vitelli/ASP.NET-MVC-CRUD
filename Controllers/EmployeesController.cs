@@ -20,6 +20,7 @@ namespace MVC.Controllers
                 lst = (from d in db.Employees
                           select new ListEmployeeViewModel
                           {             
+                              EmployeeID = d.EmployeeID,
                               LastName = d.LastName,
                               FirstName = d.FirstName,
                               Title = d.Title,                             
@@ -44,8 +45,8 @@ namespace MVC.Controllers
                 {
                     using (NorthwindEntities db = new NorthwindEntities())
                     {
-                        var oEmployee = new Employees();
-                        
+                        var oEmployee = new Employees();                        
+
                         oEmployee.FirstName = model.FirstName;
                         oEmployee.LastName = model.LastName;
                         oEmployee.Title = model.Title;                        
@@ -65,6 +66,68 @@ namespace MVC.Controllers
 
                 throw new Exception(ex.Message);
             }
+        }
+        public ActionResult Editar(int id)
+        {
+            EmployeeViewModel model = new EmployeeViewModel();
+            using (NorthwindEntities db = new NorthwindEntities())
+            {
+                var oEmployee = db.Employees.Find(id);
+               
+                model.FirstName = oEmployee.FirstName;
+                model.LastName = oEmployee.LastName;
+                model.Title = oEmployee.Title;
+                model.Address = oEmployee.Address;
+                model.EmployeeID = oEmployee.EmployeeID;
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Editar(EmployeeViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (NorthwindEntities db = new NorthwindEntities())
+                    {
+                        var oEmployee = db.Employees.Find(model.EmployeeID);
+
+                        oEmployee.FirstName = model.FirstName;
+                        oEmployee.LastName = model.LastName;
+                        oEmployee.Title = model.Title;
+                        oEmployee.Address = model.Address;
+                        oEmployee.EmployeeID = model.EmployeeID;
+
+                        db.Entry(oEmployee).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("~/Employees/");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Eliminar(int id)
+        {
+            
+            using (NorthwindEntities db = new NorthwindEntities())
+            {
+                var oEmployee = db.Employees.Find(id);
+                db.Employees.Remove(oEmployee);
+                db.SaveChanges();
+            }
+            return Redirect("~/Employees/");
         }
     }
 }
